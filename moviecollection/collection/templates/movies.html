@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1 align="center">Movies</h1>
+    <a href="{% url 'add_movie' %}"><button class="btn btn-info">ADD MOVIE</button></a>
+    <br><br>
+    <div class="table-responsive">
+        <table align="center" border="1" class="table table-striped">
+            <thead>
+                <td align="center"><b>ID</b></td>
+                <td align="center"><b>Title</b></td>
+                <td align="center"><b>Description</b></td>
+                <td align="center"><b>Release Date</b></td>
+                <td align="center"><b>Languages</b></td>
+                <td align="center"><b>Reting</b></td>
+                <td align="center"><b>URL</b></td>
+                <td align="center"><b>Length</b></td>
+                <td align="center"><b>Trailer</b></td>
+                <td align="center"><b>Poster</b></td>
+            </thead>
+            {% if movies %}
+                {% for movie in movies %}
+                    <tr>
+                        <td align="center"><a href="{% url 'manage_movie' pk=movie.id %}" >{{movie.id}}</a></td>
+                        <td align="center"><a href="{% url 'manage_movie' pk=movie.id %}" >{{movie.title}}</a></td>
+                        <td align="center"><a href="{% url 'manage_movie' pk=movie.id %}" >{{movie.description|truncatewords:20}}</a></td>
+                        <td align="center"><a href="{% url 'manage_movie' pk=movie.id %}" >{{movie.release_date}}</a></td>
+                        <td align="center"><a href="{% url 'manage_movie' pk=movie.id %}" >{{movie.languages}}</a></td>
+                        <td align="center"><a href="{% url 'manage_movie' pk=movie.id %}" >{{movie.imdb_rating}}</a></td>
+                        <td align="center"><a href="{% url 'manage_movie' pk=movie.id %}" >{{movie.imdb_url}}</a></td>
+                        <td align="center"><a href="{% url 'manage_movie' pk=movie.id %}" >{{movie.length}}</a></td>
+                        <td align="center"><a href="{% url 'manage_movie' pk=movie.id %}" >{{movie.trailer_url}}</a></td>
+                        <td align="center"><a href="{% url 'manage_movie' pk=movie.id %}" >{{movie.poster}}</a></td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+    </div>
+    <div class="pagination">
+        <span class="step-links">
+            {% if movies.has_previous %}
+                <a href="?page={{ movies.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ movies.number }} of {{ movies.paginator.num_pages }}.
+            </span>
+
+            {% if movies.has_next %}
+                <a href="?page={{ movies.next_page_number }}">next</a>
+            {% endif %}
+        </span>
+    </div>
+{% endblock%}

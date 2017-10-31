@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="text-center">
+        {% if movie_data %}
+            <h4>Edit Movie</h4>
+        {% else %}
+            <h4>Add a New Movie</h4>
+        {% endif %}
+    </div>
+    <center>
+        <form action="." method="POST">
+            {% csrf_token %}
+            {{movie_form.as_p}}
+            <div class="text-center">
+                {% if movie_data %}
+                    <input style="display: inline-block" type="submit" name="user_update_button" value="Update" class="btn btn-primary">
+                    <a href="{% url 'delete_movie' pk=movie_data.id %}" class="btn btn-danger">Delete</a>
+                {% else %}
+                    <input style="display: inline-block" type="submit" name="user_create_button" value="Add" class="btn btn-primary">
+                {% endif %}
+                <a href="{% url 'movies'%}" class="btn btn-default">Cancel</a>
+            </div>
+        </form>
+    </center>
+{% endblock%}
